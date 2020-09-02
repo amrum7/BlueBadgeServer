@@ -9,6 +9,7 @@ router.post("/post", validateSession, (req, res) => {
     category: req.body.budget.category,
     amount: req.body.budget.amount,
     date: req.body.budget.date,
+    owner: req.user.id,
   };
   Budget.create(budgetEntry)
     .then((budget) => res.status(200).json(budget))
@@ -36,6 +37,7 @@ router.put("/budget/:id", validateSession, (req, res) => {
     category: req.body.budget.category,
     amount: req.body.budget.amount,
     date: req.body.budget.date,
+    owner: req.user.id,
   };
 
   const query = { where: { id: req.params.id, owner: req.user.id } };

@@ -16,8 +16,11 @@ router.post("/post", validateSession, (req, res) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-router.get("/budget", (req, res) => {
-  Budget.findAll()
+router.get("/budget", validateSession, (req, res) => {
+  let userid = req.user.id;
+  Budget.findAll({
+    where: { owner: userid },
+  })
     .then((budget) => res.status(200).json(budget))
     .catch((err) => res.status(500).json({ error: err }));
 });
